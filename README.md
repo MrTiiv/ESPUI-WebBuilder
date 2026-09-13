@@ -2,11 +2,13 @@
 
 ### Mostly Built with AI · Human Reviewed
 
-![Mostly AI Generated](https://img.shields.io/badge/Mostly%20AI%20Generated-OpenAI%20Codex-000000?style=for-the-badge&logo=openai&logoColor=white)
+---
 
-![Human Reviewed](https://img.shields.io/badge/Human-Reviewed-2ea44f?style=for-the-badge)
+## Web Builder
 
-![License](https://img.shields.io/badge/License-The%20Unlicense-lightgrey?style=for-the-badge)
+The ESPUI Builder can be accessed here:
+
+**[mrtiiv.de/esp32](https://mrtiiv.de/esp32)**
 
 ---
 
@@ -29,4 +31,3 @@ I am also personally against the generation of AI-created images and artwork, es
 Whenever possible, I prefer to support **real artists and creators** and respect the time, skill, and creativity behind their work.
 
 **AI should be a tool — not an excuse to take someone else's work.**
-****
