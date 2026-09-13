@@ -3,7 +3,9 @@
 ### Mostly Built with AI · Human Reviewed
 
 ![Mostly AI Generated](https://img.shields.io/badge/Mostly%20AI%20Generated-OpenAI%20Codex-000000?style=for-the-badge&logo=openai&logoColor=white)
+
 ![Human Reviewed](https://img.shields.io/badge/Human-Reviewed-2ea44f?style=for-the-badge)
+
 ![License](https://img.shields.io/badge/License-The%20Unlicense-lightgrey?style=for-the-badge)
 
 ---
