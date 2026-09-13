@@ -1,0 +1,75 @@
+.grid3 > aside:first-child {
+  box-shadow: 8px 0 24px #02061722;
+  z-index: 1;
+}
+.grid3 > aside h3 {
+  margin: 0 0 12px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: #dbe7f7;
+}
+.grid3 > aside h3:not(:first-child) {
+  margin-top: 22px;
+}
+.preview > h2 {
+  margin: 0;
+  padding: 18px 18px 14px;
+  font-size: 22px;
+  background: #17253a;
+  border-bottom: 1px solid #31425e;
+}
+.propertiesHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.control b {
+  word-break: break-word;
+}
+.control small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bar > .topStatus {
+  margin-left: 4px;
+}
+.page:not(#ui) {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.files {
+  border-radius: 14px;
+}
+.choiceGrid .choice {
+  min-width: 0;
+}
+.wizardBody input,
+.wizardBody select {
+  min-height: 42px;
+}
+button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+.components button:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+@media (max-width: 1180px) and (min-width: 901px) {
+  .grid3 {
+    grid-template-columns: 244px minmax(0, 1fr) 300px;
+  }
+  .components {
+    grid-template-columns: 1fr;
+  }
+  .components button {
+    min-height: 48px;
+  }
+  .canvas {
+    padding-left: 24px;
+    border-left-width: 10px;
+  }
+}

@@ -1,0 +1,428 @@
+.fieldTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.infoTip {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  padding: 0;
+  border: 1px solid #4b617f;
+  border-radius: 50%;
+  background: #162238;
+  color: #9bdff0;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: help;
+}
+.infoTip:hover,
+.infoTip:focus-visible,
+.infoTip.open {
+  border-color: var(--accent);
+  background: #22d3ee18;
+  color: #67e8f9;
+  outline: none;
+}
+.infoBubble {
+  display: none !important;
+  position: absolute;
+  z-index: 150;
+  left: 50%;
+  bottom: calc(100% + 9px);
+  width: 280px;
+  max-width: calc(100vw - 42px);
+  padding: 11px 12px;
+  border: 1px solid #405572;
+  border-radius: 11px;
+  background: #0b1525;
+  color: #dbe7f7;
+  box-shadow: 0 14px 35px #0009;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  transform: translateX(-50%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.14s,
+    transform 0.14s,
+    visibility 0.14s;
+}
+.infoBubble:after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border: 6px solid transparent;
+  border-top-color: #405572;
+}
+.infoTip:hover .infoBubble,
+.infoTip:focus-visible .infoBubble,
+.infoTip.open .infoBubble {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-2px);
+}
+.choiceTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.choice .infoTip {
+  margin-left: 2px;
+}
+.checkRowTextTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.setupHelpIntro {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border: 1px solid #2d3e58;
+  border-radius: 11px;
+  background: #081220;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+@media (max-width: 650px) {
+  .infoBubble {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    bottom: 18px;
+    width: auto;
+    max-width: none;
+    transform: none;
+  }
+  .infoTip:hover .infoBubble,
+  .infoTip:focus-visible .infoBubble,
+  .infoTip.open .infoBubble {
+    transform: translateY(-2px);
+  }
+  .infoBubble:after {
+    display: none;
+  }
+}
+.helpTableWrap {
+  overflow: auto;
+  margin-top: 14px;
+  border: 1px solid #2d3e58;
+  border-radius: 14px;
+}
+.helpTable {
+  width: 100%;
+  min-width: 820px;
+  border-collapse: collapse;
+  background: #101a2b;
+}
+.helpTable th,
+.helpTable td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #263750;
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.45;
+}
+.helpTable th {
+  background: #162238;
+  color: #dbe7f7;
+  font-size: 12px;
+}
+.helpTable tbody tr:hover {
+  background: #16223880;
+}
+.status {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.status.required {
+  background: #22d3ee14;
+  color: #67e8f9;
+}
+.status.optional {
+  background: #fbbf2414;
+  color: #fde68a;
+}
+.status.none {
+  background: #94a3b814;
+  color: #cbd5e1;
+}
+.infoPortal {
+  position: fixed;
+  z-index: 1000;
+  width: min(320px, calc(100vw - 24px));
+  padding: 12px 14px;
+  border: 1px solid #405572;
+  border-radius: 12px;
+  background: #0b1525;
+  color: #dbe7f7;
+  box-shadow: 0 18px 46px #000b;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.55;
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.12s,
+    visibility 0.12s;
+}
+.infoPortal.open {
+  opacity: 1;
+  visibility: visible;
+}
+.infoPortalArrow {
+  position: fixed;
+  z-index: 1001;
+  width: 10px;
+  height: 10px;
+  background: #0b1525;
+  border-right: 1px solid #405572;
+  border-bottom: 1px solid #405572;
+  transform: rotate(45deg);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.infoPortalArrow.open {
+  opacity: 1;
+  visibility: visible;
+}
+@media (max-width: 650px) {
+  .infoPortal {
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 12px !important;
+    top: auto !important;
+    width: auto;
+  }
+  .infoPortalArrow {
+    display: none;
+  }
+}
+.mobileGuard {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: none;
+  place-items: center;
+  padding: 20px;
+  background: linear-gradient(145deg, #07101f, #0d1b30);
+  color: #e8eef8;
+}
+.mobileGuardCard {
+  width: min(100%, 440px);
+  padding: 28px;
+  border: 1px solid #31425e;
+  border-radius: 24px;
+  background: #101a2b;
+  box-shadow: 0 28px 80px #000a;
+  text-align: center;
+}
+.mobileGuardIcon {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 18px;
+  border-radius: 22px;
+  background: #22d3ee16;
+  color: #67e8f9;
+  font-size: 34px;
+}
+.mobileGuardCard h1 {
+  margin: 0 0 10px;
+  font-size: 25px;
+}
+.mobileGuardCard p {
+  margin: 0;
+  color: #a9b8cd;
+  line-height: 1.65;
+}
+.mobileGuardDetails {
+  margin-top: 18px;
+  padding: 13px;
+  border: 1px solid #2d3e58;
+  border-radius: 13px;
+  background: #081220;
+  color: #cbd5e1;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.mobileGuardBadge {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #34d39914;
+  color: #6ee7b7;
+  font-size: 12px;
+}
+.mobileGuard.show {
+  display: grid;
+}
+body.mobileBlocked {
+  overflow: hidden;
+}
+@media print {
+  .mobileGuard {
+    display: none !important;
+  }
+}
+.siteFooter {
+  padding: 18px 22px;
+  border-top: 1px solid var(--line);
+  background: #081220;
+  color: var(--muted);
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.siteFooterInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.siteFooter a {
+  color: #67e8f9;
+  text-decoration: none;
+}
+.footerIssueLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 4px 11px;
+  border: 1px solid #22d3ee66;
+  border-radius: 8px;
+  background: #22d3ee12;
+  color: #a5f3fc !important;
+  font-weight: 750;
+}
+.footerIssueLink[href]:hover,
+.footerIssueLink[href]:focus-visible {
+  border-color: #67e8f9;
+  background: #22d3ee24;
+  outline: none;
+}
+.footerIssueLink[aria-disabled="true"] {
+  opacity: .55;
+  cursor: not-allowed;
+}
+.siteFooterSeparator {
+  color: #52647e;
+}
+.licenseLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #93c5fd;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.licenseModal {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
+  display: none;
+  place-items: center;
+  padding: 20px;
+  background: #020617dd;
+  backdrop-filter: blur(8px);
+}
+.licenseModal.open {
+  display: grid;
+}
+.licenseDialog {
+  width: min(760px, 100%);
+  max-height: 84vh;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #405572;
+  border-radius: 20px;
+  background: #101a2b;
+  box-shadow: 0 30px 90px #000c;
+  overflow: hidden;
+}
+.licenseHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 1px solid #2d3e58;
+}
+.licenseHeaderText {
+  margin-right: auto;
+}
+.licenseHeader h2 {
+  margin: 0 0 4px;
+}
+.licenseHeader p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.licenseClose {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  font-size: 22px;
+}
+.licenseBody {
+  overflow: auto;
+  padding: 20px;
+}
+.licenseText {
+  margin: 0;
+  white-space: pre-wrap;
+  padding: 18px;
+  border: 1px solid #2d3e58;
+  border-radius: 13px;
+  background: #081220;
+  color: #dbe7f7;
+  font:
+    13px/1.6 ui-monospace,
+    Consolas,
+    monospace;
+}
+.licenseFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding: 14px 20px;
+  border-top: 1px solid #2d3e58;
+}
+@media (max-width: 650px) {
+  .siteFooterInner {
+    display: grid;
+    gap: 5px;
+  }
+  .siteFooterSeparator {
+    display: none;
+  }
+  .licenseModal {
+    padding: 10px;
+  }
+  .licenseDialog {
+    max-height: 92vh;
+  }
+}

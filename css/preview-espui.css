@@ -1,0 +1,232 @@
+.phoneFrame {
+  background: #16181d;
+  border-color: #343843;
+  box-shadow: 0 24px 70px #0008;
+}
+.phoneSpeaker {
+  background: #343843;
+}
+.preview {
+  font-family: "Open Sans", Arial, sans-serif !important;
+  background: #ecf0f1 !important;
+  color: #222 !important;
+  border: 0 !important;
+}
+.previewEyebrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 15px;
+  background: #fff !important;
+  color: #777 !important;
+  font-size: 10px;
+  border-bottom: 1px solid #d7dce0;
+}
+.previewEyebrow span:first-child {
+  color: #e74c3c;
+}
+.preview > h2 {
+  padding: 17px 20px 12px !important;
+  background: #ecf0f1 !important;
+  color: #222 !important;
+  border: 0 !important;
+  font-size: 30px !important;
+  font-weight: 300 !important;
+  letter-spacing: -1px;
+}
+.preview .uiTabs {
+  margin: 0 12px 12px !important;
+  border: 0 !important;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #34495e !important;
+}
+.preview .uiTabs button {
+  min-height: 42px;
+  padding: 10px 12px !important;
+  border: 0 !important;
+  border-right: 1px solid #2c3e50 !important;
+  background: #34495e !important;
+  color: #fff !important;
+  border-radius: 0 !important;
+  font-weight: 400 !important;
+}
+.preview .uiTabs button.active {
+  background: #1abc9c !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+.preview .dragHint {
+  margin: 0 12px 12px;
+  background: #fff;
+  color: #777;
+  border: 1px dashed #bbb;
+}
+.preview .controls {
+  display: block !important;
+  min-height: 590px !important;
+  padding: 0 12px 18px !important;
+  background: #ecf0f1 !important;
+}
+.preview .control {
+  position: relative;
+  margin: 0 0 16px !important;
+  padding: 16px 18px 18px !important;
+  min-height: 96px;
+  border: 0 !important;
+  border-bottom: 3px solid rgba(0, 0, 0, 0.14) !important;
+  border-radius: 6px !important;
+  background: #1abc9c !important;
+  color: #fff !important;
+  box-shadow: 0 4px 4px rgba(80, 75, 70, 0.28) !important;
+}
+.preview .control:hover {
+  transform: none !important;
+}
+.preview .control.selected {
+  outline: 3px solid #22d3ee !important;
+  outline-offset: 2px;
+}
+.preview .control small {
+  color: rgba(255, 255, 255, 0.78) !important;
+  font-size: 10px !important;
+}
+.preview .control b {
+  color: #fff !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+}
+.preview .control[data-espui-color="Emerald"] {
+  background: #2ecc71 !important;
+}
+.preview .control[data-espui-color="Peterriver"] {
+  background: #3498db !important;
+}
+.preview .control[data-espui-color="Wetasphalt"] {
+  background: #34495e !important;
+}
+.preview .control[data-espui-color="Sunflower"] {
+  background: #f1c40f !important;
+  color: #333 !important;
+}
+.preview .control[data-espui-color="Carrot"] {
+  background: #e67e22 !important;
+}
+.preview .control[data-espui-color="Alizarin"] {
+  background: #e74c3c !important;
+}
+.preview .control[data-espui-color="Dark"] {
+  background: #444857 !important;
+}
+.preview .control[data-espui-color="None"] {
+  background: #fff !important;
+  color: #222 !important;
+  border: 1px solid #ddd !important;
+}
+.preview .control[data-espui-color="Sunflower"] b,
+.preview .control[data-espui-color="Sunflower"] small,
+.preview .control[data-espui-color="None"] b,
+.preview .control[data-espui-color="None"] small {
+  color: #333 !important;
+}
+.preview .dragHandle {
+  color: inherit !important;
+}
+.preview .espuiButton {
+  width: auto !important;
+  min-width: 140px !important;
+  min-height: 42px !important;
+  margin: 14px 0 0 !important;
+  padding: 10px 16px !important;
+  border: 0 !important;
+  border-radius: 3px !important;
+  background: #999 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.preview .espuiButton:active,
+.preview .espuiButton.pressed {
+  background: #666 !important;
+  transform: translate(3px, 3px) !important;
+}
+.preview .espuiSwitch {
+  position: relative;
+  width: 60px;
+  height: 26px;
+  margin-top: 14px;
+  padding: 0;
+  border-radius: 4px;
+  background: #bebebe !important;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.preview .espuiSwitch i {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 26px;
+  height: 18px;
+  margin: 0;
+  border-radius: 2px;
+  background: linear-gradient(#fff, #eee);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+.preview input,
+.preview select {
+  margin-top: 14px !important;
+  min-height: 38px !important;
+  padding: 8px 10px !important;
+  border: 1px solid #bbb !important;
+  border-radius: 4px !important;
+  background: #fff !important;
+  color: #222 !important;
+  box-shadow: none !important;
+}
+.preview input[type="range"] {
+  height: 4px !important;
+  min-height: 4px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: #bebebe !important;
+  accent-color: #fff;
+}
+.preview .espuiValueLabel {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 0.2em 0.5em;
+  border-radius: 0.2em;
+  background: #999;
+  color: #fff;
+  font-weight: 700;
+}
+.preview .espuiSeparator {
+  margin: 10px 0 0;
+  border: 0;
+  border-top: 2px solid rgba(255, 255, 255, 0.65);
+}
+.preview .espuiGraph {
+  height: 90px;
+  margin-top: 14px;
+  border-left: 1px solid rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+  background: linear-gradient(
+    160deg,
+    transparent 48%,
+    rgba(255, 255, 255, 0.95) 49%,
+    rgba(255, 255, 255, 0.95) 51%,
+    transparent 52%
+  );
+}
+.preview .espuiOutput {
+  opacity: 0.9;
+  background: #f5f5f5 !important;
+}
+.preview .espuiSetMember {
+  margin-top: -16px !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+.preview .empty {
+  color: #777;
+  background: #fff;
+  border-color: #bbb;
+}

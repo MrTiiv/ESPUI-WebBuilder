@@ -1,0 +1,827 @@
+<!doctype html>
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Lokaler WebBuilder für ESP32-Webinterfaces mit ESPUI 2.2.4. Komponenten konfigurieren, ESP-Code erzeugen und herunterladen." />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <title>ESPUI WebBuilder</title>
+    <link href="favicon.svg?v=2.17.0" rel="icon" type="image/svg+xml" />
+    <link href="css/base.css?v=2.17.0" rel="stylesheet" />
+    <link href="css/layout.css?v=2.17.0" rel="stylesheet" />
+    <link href="css/components.css?v=2.17.0" rel="stylesheet" />
+    <link href="css/wizard.css?v=2.17.0" rel="stylesheet" />
+    <link href="css/preview.css?v=2.17.0" rel="stylesheet" />
+    <link href="css/preview-espui.css?v=2.17.0" rel="stylesheet" />
+    <link href="css/help.css?v=2.17.0" rel="stylesheet" />
+    <link href="css/dialogs.css?v=2.17.0" rel="stylesheet" />
+    <link href="css/editor.css?v=2.17.0" rel="stylesheet" />
+  </head>
+  <body>
+    <div
+      aria-labelledby="mobileGuardTitle"
+      aria-modal="true"
+      class="mobileGuard"
+      id="mobileGuard"
+      role="alertdialog"
+    >
+      <div class="mobileGuardCard">
+        <div class="mobileGuardIcon">▰</div>
+        <h1 id="mobileGuardTitle">Desktop erforderlich</h1>
+        <p>
+          Der ESPUI WebBuilder ist für einen Computer oder ein größeres Tablet
+          ausgelegt. Auf einem Smartphone stehen für Komponenten, Vorschau und
+          Eigenschaften nicht genügend Platz und präzise Drag-and-drop-Bedienung
+          zur Verfügung.
+        </p>
+        <div class="mobileGuardDetails">
+          Bitte öffne diese Seite auf einem Desktop-PC, Notebook oder Tablet im
+          Querformat mit einer Breite von mindestens 900 Pixeln.
+        </div>
+        <span class="mobileGuardBadge">
+          Dein gespeichertes Projekt bleibt im Browser erhalten
+        </span>
+      </div>
+    </div>
+    <div class="infoPortal" id="infoPortal" role="tooltip"></div>
+    <div class="infoPortalArrow" id="infoPortalArrow"></div>
+    <div class="modal hidden" id="setupModal">
+      <div class="wizard">
+        <div class="wizardHead">
+          <label class="wizardLanguagePicker">
+            <select aria-label="Language" data-language-select>
+              <option value="de">Deutsch</option>
+              <option value="en">English</option>
+            </select>
+          </label>
+          <span class="badge"> ESPUI WebBuilder · Version 2.17.0 ·&nbsp 
+			<a href="https://github.com/s00500/ESPUI" target="_blank">
+				ESPUI 2.2.4 von s00500
+			</a>   
+		</span>
+          <h1 id="wizardTitle">Willkommen</h1>
+          <p id="wizardSubtitle" style="color: var(--muted); margin: 0">
+            Richte dein ESP32-Webinterface in wenigen Schritten ein.
+          </p>
+          <div class="steps">
+            <i class="stepDot active"> </i>
+            <i class="stepDot"> </i>
+            <i class="stepDot"> </i>
+            <i class="stepDot"> </i>
+          </div>
+        </div>
+        <div class="wizardBody">
+          <div class="wizardPage active" data-step="0">
+            <h2>ESPUI WebBuilder</h2>
+            <p>
+              <span data-i18n="wizard.createdWith">Dieser Builder wurde mit</span>
+              <b> Codex </b>
+              <span data-i18n="wizard.createdWithTail">erstellt.</span>
+			  </p> 
+			  <p>
+				Der erzeugte ESP-Code ist für
+              <b> <a href="https://github.com/s00500/ESPUI" target="_blank">
+				ESPUI 2.2.4 von s00500
+			</a>   </b>
+              <span data-i18n="wizard.codeForTail">ausgelegt.</span>
+            </p>
+            <p class="help" data-i18n="wizard.local">
+              Der Builder arbeitet vollständig lokal in deinem Browser. Projekte
+              und WLAN-Daten werden nicht an einen Server übertragen. Der Builder kann fehler machen, der erzeugte Code kann fehler enthalten. 
+            </p>
+          </div>
+          <div class="wizardPage" data-step="1">
+            <h2 class="sectionTitle">Projekt</h2>
+            <p class="setupHelpIntro" data-i18n="wizard.setupHelp">
+              Tippe oder zeige auf ein
+              <b> i </b>
+              , um eine kurze Erklärung zur jeweiligen Einstellung zu öffnen.
+            </p>
+            <div class="stack">
+              <label>
+                <span class="fieldTitle">
+                  <span data-i18n="wizard.projectName">Projektname</span>
+                  <button
+                    aria-expanded="false"
+                    aria-label="Hilfe"
+                    class="infoTip"
+                    type="button"
+                  >
+                    i
+                    <span class="infoBubble" role="tooltip">
+                      Interner Name für die Projektdatei. Dieser Name hat keinen
+                      Einfluss auf die WLAN-Verbindung oder die Adresse des
+                      ESP32.
+                    </span>
+                  </button>
+                </span>
+                <input id="wizProjectName" value="Mein ESPUI Projekt" />
+              </label>
+              <label>
+                <span class="fieldTitle">
+                  <span data-i18n="wizard.interfaceTitle">Titel des Webinterfaces</span>
+                  <button
+                    aria-expanded="false"
+                    aria-label="Hilfe"
+                    class="infoTip"
+                    type="button"
+                  >
+                    i
+                    <span class="infoBubble" role="tooltip">
+                      Dieser Text wird später als Überschrift im
+                      ESPUI-Webinterface angezeigt.
+                    </span>
+                  </button>
+                </span>
+                <input id="wizTitle" value="ESP32 Steuerung" />
+              </label>
+              <div class="row">
+                <label>
+                  <span class="fieldTitle">
+                    Hostname
+                    <button
+                      aria-expanded="false"
+                      aria-label="Hilfe"
+                      class="infoTip"
+                      type="button"
+                    >
+                      i
+                      <span class="infoBubble" role="tooltip">
+                        Netzwerkname des ESP32. Je nach Router und Gerät kann
+                        das Webinterface später zum Beispiel über espui.local
+                        erreichbar sein.
+                      </span>
+                    </button>
+                  </span>
+                  <input id="wizHostname" value="espui" />
+                </label>
+                <label>
+                  <span class="fieldTitle">
+                  <span data-i18n="wizard.port">Webserver-Port</span>
+                    <button
+                      aria-expanded="false"
+                      aria-label="Hilfe"
+                      class="infoTip"
+                      type="button"
+                    >
+                      i
+                      <span class="infoBubble" role="tooltip">
+                        TCP-Port des Webinterfaces. Port 80 ist der normale
+                        HTTP-Standard und muss im Browser nicht extra angegeben
+                        werden.
+                      </span>
+                    </button>
+                  </span>
+                  <input
+                    id="wizPort"
+                    max="65535"
+                    min="1"
+                    type="number"
+                    value="80"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="wizardPage" data-step="2">
+            <h2 class="sectionTitle">WLAN-Verbindung</h2>
+            <div class="choiceGrid">
+              <label class="choice">
+                <input name="wizMode" type="radio" value="external" />
+                <span class="choiceText">
+                  <span class="choiceTitle">
+                    WLAN im Hauptcode
+                    <button
+                      aria-expanded="false"
+                      aria-label="Hilfe"
+                      class="infoTip"
+                      type="button"
+                    >
+                      i
+                      <span class="infoBubble" role="tooltip">
+                        Der Builder erzeugt keine WLAN-Initialisierung. Dein
+                        Hauptsketch muss WiFi selbst verbinden, bevor
+                        WebUI::begin() aufgerufen wird.
+                      </span>
+                    </button>
+                  </span>
+                  <small> Builder startet nur ESPUI </small>
+                </span>
+              </label>
+              <label class="choice">
+                <input name="wizMode" type="radio" value="station" />
+                <span class="choiceText">
+                  <span class="choiceTitle">
+                    Mit WLAN verbinden
+                    <button
+                      aria-expanded="false"
+                      aria-label="Hilfe"
+                      class="infoTip"
+                      type="button"
+                    >
+                      i
+                      <span class="infoBubble" role="tooltip">
+                        Der ESP32 verbindet sich als Client mit einem
+                        vorhandenen Router oder WLAN.
+                      </span>
+                    </button>
+                  </span>
+                  <small> ESP32 als WLAN-Client </small>
+                </span>
+              </label>
+              <label class="choice">
+                <input checked="" name="wizMode" type="radio" value="ap" />
+                <span class="choiceText">
+                  <span class="choiceTitle">
+                    Hotspot erstellen
+                    <button
+                      aria-expanded="false"
+                      aria-label="Hilfe"
+                      class="infoTip"
+                      type="button"
+                    >
+                      i
+                      <span class="infoBubble" role="tooltip">
+                        Der ESP32 erstellt ein eigenes WLAN. Handy oder Tablet
+                        verbinden sich direkt mit diesem Hotspot.
+                      </span>
+                    </button>
+                  </span>
+                  <small> Direkte Verbindung zum ESP32 </small>
+                </span>
+              </label>
+              <label class="choice">
+                <input name="wizMode" type="radio" value="captive" />
+                <span class="choiceText">
+                  <span class="choiceTitle">
+                    Hotspot + Captive Portal
+                    <button
+                      aria-expanded="false"
+                      aria-label="Hilfe"
+                      class="infoTip"
+                      type="button"
+                    >
+                      i
+                      <span class="infoBubble" role="tooltip">
+                        Wie ein Hotspot, zusätzlich werden DNS-Anfragen zum
+                        ESP32 umgeleitet. Dadurch öffnet sich das Portal auf
+                        vielen Geräten automatisch.
+                      </span>
+                    </button>
+                  </span>
+                  <small> Automatische Portal-Weiterleitung </small>
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="wizardPage" data-step="3">
+            <h2 class="sectionTitle">Netzwerkdetails</h2>
+            <div class="stack" id="wizNetworkDetails"></div>
+            <label class="checkRow" style="margin-top: 14px">
+              <input checked="" id="wizPersistent" type="checkbox" />
+              <span class="checkRowText">
+                <span class="checkRowTextTitle">
+                  Verbindung dauerhaft aktiv halten
+                  <button
+                    aria-expanded="false"
+                    aria-label="Hilfe"
+                    class="infoTip"
+                    type="button"
+                  >
+                    i
+                    <span class="infoBubble" role="tooltip">
+                      Aktiv: WLAN oder Hotspot bleibt eingeschaltet.
+                      Deaktiviert: Die Verbindung wird nach dem eingestellten
+                      Timeout beendet und kann optional über den Reconnect-Bool
+                      erneut gestartet werden.
+                    </span>
+                  </button>
+                </span>
+                <small>
+                  Bei aktiver Dauerverbindung wird kein Timeout benötigt.
+                </small>
+              </span>
+            </label>
+            <p class="help" style="margin-top: 14px">
+              Reconnect-Bool und Status-Bool sind optional und dürfen leer
+              bleiben.
+            </p>
+            <div class="row" style="margin-top: 8px">
+              <label>
+                <span class="fieldTitle">
+                  Reconnect-Bool (optional)
+                  <button
+                    aria-expanded="false"
+                    aria-label="Hilfe"
+                    class="infoTip"
+                    type="button"
+                  >
+                    i
+                    <span class="infoBubble" role="tooltip">
+                      Name einer globalen bool-Variable im Hauptcode. Setzt dein
+                      Hauptcode diese Variable auf true, wird die Konfigurierte WLAN verbindung neugestartet.
+					  Ist hilfreich wenn ein Timeout der WLAN Verbindung Konfiguriert ist und mann ohne neustart die Verbindung wieder aufbauen will. +
+					  Das Bool wird Standardmäßig nach erfolgreicher ausführung auf false gesetzt. 
+					  Das Feld kann leer bleiben. 
+                    </span>
+                  </button>
+                </span>
+                <input id="wizReconnect" value="" />
+              </label>
+              <label>
+                <span class="fieldTitle">
+                  Status-Bool (optional)
+                  <button
+                    aria-expanded="false"
+                    aria-label="Hilfe"
+                    class="infoTip"
+                    type="button"
+                  >
+                    i
+                    <span class="infoBubble" role="tooltip">
+					  Name einer globalen bool-Variable im Hauptcode.
+					  Wird beim WLAN-Client true wenn die Verbindung aufgebaut ist.
+					  Wird beim WLAN-Hotspot true wenn der Hotspot Aktiv ist.
+					  Das Feld darf leer bleiben.
+                    </span>
+                  </button>
+                </span>
+                <input id="wizStatus" value="" />
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="wizardFooter">
+          <button class="hidden" data-i18n="action.cancel" id="wizCancel">Abbrechen</button>
+          <button class="hidden" id="wizBack">Zurück</button>
+          <button class="primary" id="wizNext">Los geht's</button>
+        </div>
+      </div>
+    </div>
+    <header>
+      <div class="bar">
+        <div class="brand">
+          <b> ESPUI WebBuilder </b>
+        </div>
+        <div class="topStatus">
+          <span class="versionPill"><span data-i18n="header.uses">Builder verwendet</span>
+            <a href="https://github.com/s00500/ESPUI" target="_blank">
+                ESPUI 2.2.4 von s00500
+            </a> 
+		   </span>
+          <span data-i18n="header.created">Erstellt mit Codex</span>
+        </div>
+        <label class="languagePicker">
+          <select aria-label="Language" data-language-select id="languageSelect">
+            <option value="de">Deutsch</option>
+            <option value="en">English</option>
+          </select>
+        </label>
+        <details class="projectMenu">
+          <summary data-i18n="header.project">Projekt</summary>
+          <div class="projectActions">
+          <button data-i18n="header.new" id="newProject">Neues Projekt</button>
+          <label class="btn">
+            <span data-i18n="header.import">Projekt importieren</span>
+            <input accept=".json" class="hidden" id="importFile" type="file" />
+          </label>
+          <button data-i18n="header.export" id="exportProject">Projekt als JSON exportieren</button>
+          </div>
+        </details>
+        <button class="primary" data-i18n="header.download" id="downloadAll">Projekt als ZIP herunterladen</button>
+      </div>
+      <div class="navigationBar">
+      <nav class="tabs" id="nav">
+        <button class="active" data-page="ui">UI Builder</button>
+        <button data-i18n="nav.variables" data-page="vars">Variablen</button>
+        <button data-i18n="nav.network" data-page="network">Netzwerk</button>
+        <button data-i18n="nav.options" data-page="expert">Optionen</button>
+        <button data-page="code">Code</button>
+        <button data-i18n="nav.help" data-page="help">Hilfe</button>
+      </nav>
+      <div class="historyActions" aria-label="Verlauf">
+        <button data-i18n="header.undo" id="undoProject" title="Strg/Cmd + Z">↶ Rückgängig</button>
+        <button data-i18n="header.redo" id="redoProject" title="Strg/Cmd + Umschalt + Z">↷ Wiederherstellen</button>
+      </div></div>
+    </header>
+    <div id="saveStatus" role="status" aria-live="polite"></div>
+    <div id="actionStatus" role="status" aria-live="polite"></div>
+    <div class="notice hidden" id="notice"></div>
+    <section class="page active" id="ui" style="padding: 0">
+      <div class="grid3">
+        <aside>
+          <h3 data-i18n="ui.pages">Seiten</h3>
+          <div class="tabManager" id="tabManager"></div>
+          <button
+            id="addTab"
+            style="width: calc(100% - 4px); margin: 0 4px 20px 0"
+          >
+            <span data-i18n="ui.newPage">+ Neue Seite</span>
+          </button>
+          <h3 data-i18n="ui.components">Komponenten</h3>
+          <label class="componentSearch"><span data-i18n="components.search">Komponenten suchen</span><input type="search" id="componentSearch" autocomplete="off" placeholder="z. B. Schalter, Text …"></label>
+          <div id="components"></div>
+          <p class="hidden mutedBlock" id="noComponents" data-i18n="components.empty">Keine passenden Komponenten.</p>
+        </aside>
+        <main class="canvas">
+          <div class="previewShell">
+            <div class="previewToolbar">
+              <div>
+                <span class="editMode" data-i18n="ui.editMode">Bearbeiten · Element anklicken</span><br>
+                <b data-i18n="ui.preview">ESPUI Live-Vorschau</b>
+                <div data-i18n="ui.previewDetail" style="font-size: 11px; color: var(--muted)">
+                  Originalgetreue ESPUI Mobilansicht
+                </div>
+              </div>
+            </div>
+            <div class="phoneFrame" id="phoneFrame">
+              <div class="phoneSpeaker"></div>
+              <div class="preview" id="espuiPreview">
+                <div class="previewEyebrow">
+                  <span id="previewConnection"> Simulation </span>
+                  <span data-i18n="ui.previewName">ESPUI Vorschau</span>
+                </div>
+                <h2 id="previewTitle"></h2>
+                <div class="uiTabs" id="previewTabs"></div>
+                <div class="dragHint">
+                  <span data-i18n="ui.drag">☷ Controls greifen und innerhalb dieser Seite verschieben</span>
+                </div>
+                <div class="controls" id="previewControls"></div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <aside>
+          <div class="propertiesHeader">
+            <h3 data-i18n="ui.properties">Eigenschaften</h3>
+          </div>
+          <div class="stack" id="properties">
+            <span data-i18n="ui.selectControl" style="color: var(--muted)">Control auswählen</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+    <section class="page" id="vars">
+      <div class="bar">
+        <div>
+          <h2 data-i18n="vars.title">Externe Variablen</h2>
+          <p data-i18n="vars.description" style="color: var(--muted)">
+            Definition im Hauptcode, Zugriff im generierten Code über extern.
+          </p>
+        </div>
+        <button class="primary" data-i18n="vars.add" id="addVar">+ Variable</button>
+      </div>
+      <div class="variableTools">
+        <label>
+          <span data-i18n="vars.search">Variablen suchen</span>
+          <input autocomplete="off" id="variableSearch" placeholder="Name oder Datentyp …" type="search" />
+        </label>
+        <label>
+          <span data-i18n="vars.filterType">Datentyp filtern</span>
+          <select id="variableTypeFilter">
+            <option data-i18n="vars.allTypes" value="">Alle Datentypen</option>
+          </select>
+        </label>
+      </div>
+      <div class="list" id="varList"></div>
+      <p class="empty hidden" data-i18n="vars.noResults" id="noVariables">Keine passenden Variablen.</p>
+    </section>
+    <section class="page" id="network">
+      <div class="split">
+        <div class="card stack">
+          <h2 data-i18n="network.title">Netzwerkmodus</h2>
+          <label>
+            <span data-i18n="network.mode">Modus</span>
+            <select id="wifiMode">
+              <option data-i18n="network.external" value="external">WLAN im Hauptcode</option>
+              <option data-i18n="network.station" value="station">Mit WLAN verbinden</option>
+              <option data-i18n="network.ap" value="ap">WLAN-Hotspot</option>
+              <option data-i18n="network.captive" value="captive">Hotspot mit Captive Portal</option>
+            </select>
+          </label>
+          <div class="stack" id="networkFields"></div>
+        </div>
+        <div class="card stack">
+          <h2 data-i18n="network.control">Verbindungssteuerung</h2>
+          <label class="checkRow">
+            <input id="persistent" type="checkbox" />
+            <span class="checkRowText">
+              <span data-i18n="network.persistent">Dauerhaft aktiv</span>
+              <small data-i18n="network.persistentHelp">
+                Wenn nicht aktiv wird die Verbindung nach dem Timeout beendet.
+              </small>
+            </span>
+          </label>
+          <label id="timeoutWrap">
+            <span data-i18n="network.timeout">Timeout in Millisekunden</span>
+            <input id="timeout" type="number" />
+          </label>
+          <p class="help" data-i18n="network.optionalHelp">
+            Reconnect-Bool und Status-Bool sind optional. Beide Felder dürfen
+            leer bleiben.
+          </p>
+          <label>
+            <span data-i18n="network.reconnect">Reconnect-Bool (optional)</span>
+            <input id="reconnectVar" />
+          </label>
+          <label class="checkRow">
+            <input id="resetReconnect" type="checkbox" />
+            <span class="checkRowText">
+              <span data-i18n="network.resetReconnect">Reconnect-Bool nach Ausführung zurücksetzen</span>
+            </span>
+          </label>
+          <label>
+            <span data-i18n="network.status">Status-Bool (optional)</span>
+            <input id="statusVar" />
+          </label>
+        </div>
+      </div>
+    </section>
+    <section class="page" id="expert">
+      <div class="card stack" style="max-width: 850px; margin: auto">
+        <h2 data-i18n="expert.title">Optionen</h2>
+        <div class="row">
+          <label>
+            <span data-i18n="expert.projectName">Projektname</span>
+            <input id="projectName" />
+          </label>
+          <label>
+            <span data-i18n="expert.uiTitle">UI-Titel</span>
+            <input id="title" />
+          </label>
+        </div>
+        <div class="row">
+          <label>
+            <span> Hostname </span>
+            <input id="hostname" />
+          </label>
+          <label>
+            <span data-i18n="expert.port">ESPUI-Port</span>
+            <input id="port" type="number" />
+          </label>
+          <label>
+            <span data-i18n="expert.sync">Sync-Intervall ms</span>
+            <input id="syncMs" type="number" />
+          </label>
+        </div>
+        <label class="checkRow">
+          <input id="auth" type="checkbox" />
+          <span class="checkRowText" data-i18n="expert.auth">HTTP-Anmeldung aktivieren</span>
+        </label>
+        <div class="row" id="authFields"></div>
+      </div>
+    </section>
+    <section class="page" id="help">
+      <div class="helpHero">
+        <div>
+          <span class="helpEyebrow">Schnellhilfe</span>
+          <h2>ESPUI WebBuilder 1.0.0</h2>
+          <p>Vom leeren Projekt bis zum fertigen ESP32-Code – Schritt für Schritt erklärt.</p>
+        </div>
+        <div class="helpIcon" aria-hidden="true">?</div>
+      </div>
+
+      <nav class="helpQuickNav" aria-label="Hilfethemen">
+        <a href="#helpStart">Erste Schritte</a>
+        <a href="#helpBasics">Grundbegriffe</a>
+        <a href="#helpComponents">Komponenten</a>
+        <a href="#helpNetwork">Netzwerk</a>
+        <a href="#helpExport">Export</a>
+        <a href="#helpProblems">Probleme lösen</a>
+      </nav>
+
+      <section class="helpSection" id="helpStart">
+        <h2>Erste Schritte</h2>
+        <p class="helpLead">Diese vier Schritte reichen für dein erstes funktionsfähiges Projekt.</p>
+        <div class="helpGrid helpSteps">
+          <article class="helpCard">
+            <span class="helpStep">1</span>
+            <h3>Projekt einrichten</h3>
+            <p>Lege im Assistenten Projektname, Titel und Netzwerkmodus fest. Du kannst alle Angaben später unter <b>Netzwerk</b> und <b>Optionen</b> ändern.</p>
+          </article>
+          <article class="helpCard">
+            <span class="helpStep">2</span>
+            <h3>Element hinzufügen</h3>
+            <p>Wähle links eine Komponente aus. Klicke sie in der Vorschau an, um Beschriftung, Farbe, Seite und weitere Eigenschaften anzupassen.</p>
+          </article>
+          <article class="helpCard">
+            <span class="helpStep">3</span>
+            <h3>Variable verbinden</h3>
+            <p>Erstelle direkt in den Eigenschaften eine passende Variable oder wähle eine vorhandene aus. Der Builder zeigt nur geeignete Datentypen an.</p>
+          </article>
+          <article class="helpCard">
+            <span class="helpStep">4</span>
+            <h3>Projekt herunterladen</h3>
+            <p>Behebe zuerst alle Hinweise. Lade dann die ZIP-Datei herunter und übernimm die erzeugten Dateien in deinen ESPSketch.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="helpSection" id="helpBasics">
+        <h2>Grundbegriffe</h2>
+        <p class="helpLead">Der Builder verbindet sichtbare ESPUI-Elemente mit Variablen aus deinem ESP32-Programm.</p>
+        <div class="helpTerms">
+          <article class="helpTerm"><h3>Seite</h3><p>Wird im erzeugten ESPUI-Interface als Tab angezeigt.</p></article>
+          <article class="helpTerm"><h3>Komponente</h3><p>Ein sichtbares Element wie Schalter, Textfeld, Anzeige oder Diagramm.</p></article>
+          <article class="helpTerm"><h3>Variable</h3><p>Speichert den Wert, den eine Komponente anzeigt oder verändert.</p></article>
+          <article class="helpTerm"><h3>Zugriff</h3><p><b>Lesen</b> zeigt Werte an, <b>Schreiben</b> nimmt Eingaben an, <b>Lesen/Schreiben</b> kann beides.</p></article>
+        </div>
+        <div class="helpTip"><b>Praktisch:</b> Mehrere Komponenten dürfen dieselbe Variable verwenden. Änderungen werden automatisch an alle verbundenen Elemente übertragen.</div>
+      </section>
+
+      <section class="helpSection" id="helpComponents">
+        <h2>Welche Komponente brauche ich?</h2>
+        <p class="helpLead">Ähnliche Komponenten sind zusammengefasst. Die Variablenauswahl filtert unpassende Typen automatisch aus.</p>
+        <div class="helpTableWrap">
+          <table class="helpTable">
+            <thead><tr><th>Aufgabe</th><th>Komponenten</th><th>Passende Variable</th><th>Hinweis</th></tr></thead>
+            <tbody>
+              <tr><td><b>Ein/Aus bedienen</b></td><td>Button, Switch</td><td>bool</td><td>Button gilt nur während des Drückens; Switch behält seinen Zustand.</td></tr>
+              <tr><td><b>Zahl einstellen</b></td><td>Slider, Number</td><td>32-Bit-Ganzzahl</td><td>Min und Max müssen im Bereich −2.147.483.648 bis 2.147.483.647 liegen.</td></tr>
+              <tr><td><b>Text eingeben</b></td><td>Text, Password, Date, Time, Color</td><td>String oder char[]</td><td>Text kann je nach Zugriff auch nur zur Ausgabe verwendet werden.</td></tr>
+              <tr><td><b>Auswahl treffen</b></td><td>Select, Buttonpad</td><td>Zahl, enum oder Text</td><td>Bei Select trägst du mindestens eine Option ein; eine Option pro Zeile ist am übersichtlichsten.</td></tr>
+              <tr><td><b>Werte anzeigen</b></td><td>Label, Log, Graph</td><td>Lesbare Variable</td><td>Label zeigt Einzelwerte, Log Textzeilen und Graph numerische Messpunkte.</td></tr>
+              <tr><td><b>Inhalt und Layout</b></td><td>File, Separator</td><td>Keine Variable</td><td>File zeigt eine Datei vom ESP32; Separator gliedert die Oberfläche.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <details class="helpDisclosure">
+          <summary>Sets und gemeinsame Kacheln</summary>
+          <div class="helpDisclosureBody">
+            <p>Ein Set fasst mehrere gleichartige Komponenten in einer Kachel zusammen. Erstelle zuerst das Element mit der Überschrift. Wähle dieses anschließend bei weiteren Elementen unter <b>Set / gemeinsame Kachel</b> aus.</p>
+            <p>Unterstützt werden Button, Switch, Slider und Label. Alle Elemente eines Sets müssen auf derselben Seite liegen und behalten ihre eigenen Variablen.</p>
+          </div>
+        </details>
+        <details class="helpDisclosure">
+          <summary>Was zeigt die Live-Vorschau?</summary>
+          <div class="helpDisclosureBody">
+            <p>Die Vorschau zeigt Aufbau, Farben, Tabs, Kacheln und Eingabeelemente ähnlich wie ESPUI 2.2.4. Sie dient gleichzeitig zum Auswählen und Sortieren der Elemente.</p>
+            <p>Echte Messwerte, WebSocket-Verbindung und die endgültige Darstellung lassen sich erst auf dem laufenden ESP32 vollständig prüfen.</p>
+          </div>
+        </details>
+      </section>
+
+      <section class="helpSection" id="helpNetwork">
+        <h2>Netzwerk auswählen</h2>
+        <p class="helpLead">Wähle den Modus danach aus, wie der ESP32 erreichbar sein soll.</p>
+        <div class="helpGrid">
+          <article class="helpCard"><h3>WLAN im Hauptcode</h3><p>Dein eigener Sketch baut die WLAN-Verbindung auf. Rufe danach <code>WebUI::begin()</code> auf.</p></article>
+          <article class="helpCard"><h3>Mit WLAN verbinden</h3><p>Der ESP32 verbindet sich als Client mit einem vorhandenen Router oder WLAN.</p></article>
+          <article class="helpCard"><h3>Hotspot erstellen</h3><p>Der ESP32 erstellt ein eigenes WLAN. Smartphone oder Computer verbinden sich direkt damit.</p></article>
+          <article class="helpCard"><h3>Captive Portal</h3><p>Wie beim Hotspot, zusätzlich werden DNS-Anfragen umgeleitet. Dadurch öffnet sich die Oberfläche auf vielen Geräten automatisch.</p></article>
+        </div>
+        <div class="helpTip"><b>Optional:</b> Reconnect-Bool und Status-Bool dürfen leer bleiben. Wenn du sie verwendest, müssen sie als globale bool-Variablen in deinem Hauptcode vorhanden sein.</div>
+      </section>
+
+      <section class="helpSection" id="helpExport">
+        <h2>Code exportieren und verwenden</h2>
+        <ol class="helpChecklist">
+          <li><span>1</span><div><b>Hinweise beheben</b><p>Der Export bleibt gesperrt, solange ungültige oder fehlende Angaben vorhanden sind. Ein Klick auf den Hinweis führt zum betroffenen Feld.</p></div></li>
+          <li><span>2</span><div><b>ZIP herunterladen</b><p>Die ZIP-Datei enthält den ESP-Code und eine Projektdatei als Sicherung.</p></div></li>
+          <li><span>3</span><div><b>Dateien übernehmen</b><p>Kopiere <code>WebUI.h</code> und <code>WebUI.cpp</code> in deinen Sketchordner. <code>MainCodeExample.ino</code> zeigt die nötigen Aufrufe.</p></div></li>
+          <li><span>4</span><div><b>Auf Hardware prüfen</b><p>Kompiliere das Projekt mit ESPUI 2.2.4 und teste Netzwerk, Eingaben und Anzeigen auf deinem ESP32.</p></div></li>
+        </ol>
+      </section>
+
+      <section class="helpSection" id="helpProblems">
+        <h2>Typische Probleme lösen</h2>
+        <div class="helpProblemList">
+          <article><h3>Keine Variable auswählbar</h3><p>Datentyp oder Zugriff passen nicht zur Komponente. Nutze <b>Variable erstellen und zuordnen</b>, um automatisch eine passende Variable anzulegen.</p></article>
+          <article><h3>Export ist gesperrt</h3><p>Öffne die Hinweise oberhalb des Arbeitsbereichs und gehe die markierten Felder der Reihe nach durch.</p></article>
+          <article><h3>Änderung war unbeabsichtigt</h3><p>Nutze <b>Rückgängig</b> in der Kopfzeile oder die Tastenkombination Strg+Z.</p></article>
+          <article><h3>Projekt soll gesichert werden</h3><p>Exportiere im Projektmenü eine JSON-Datei. Sie kann später wieder importiert und weiterbearbeitet werden.</p></article>
+        </div>
+      </section>
+    </section>
+    <section class="page" id="code">
+      <div class="codegrid">
+        <aside class="files" id="files"></aside>
+        <main>
+          <div class="bar" style="margin-bottom: 10px">
+            <b id="codeName"> </b>
+            <button data-i18n="code.copy" id="copyCode">Kopieren</button>
+            <button class="primary" data-i18n="code.download" id="downloadOne">
+              Datei herunterladen
+            </button>
+          </div>
+          <pre><code id="codeText"></code></pre>
+        </main>
+      </div>
+    </section>
+    <footer class="siteFooter">
+      <div class="siteFooterInner">
+        <span
+          ><span data-i18n="footer.hosting">Hosting by</span>
+          <a
+            href="https://flosing.network/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >flosing.NETWORK</a
+          ></span
+        ><span aria-hidden="true" class="siteFooterSeparator">|</span
+        ><span data-i18n="footer.created">Made with AI</span
+        ><span aria-hidden="true" class="siteFooterSeparator">|</span
+        ><a
+          href="https://github.com/MrTiiv/ESPUI-WebBuilder/issues"
+          rel="noopener noreferrer"
+          target="_blank"
+          class="footerIssueLink"
+          id="githubIssuesLink"
+          >Found an Issue?</a
+        ><span aria-hidden="true" class="siteFooterSeparator">|</span
+        ><span
+          >Because this project made with AI, it is released under
+          <button
+            aria-haspopup="dialog"
+            class="licenseLink"
+            id="openLicense"
+            type="button"
+          >
+            The Unlicense License</button
+          >.</span
+        >
+      </div>
+    </footer>
+    <div
+      aria-hidden="true"
+      aria-labelledby="licenseTitle"
+      aria-modal="true"
+      class="licenseModal"
+      id="licenseModal"
+      role="dialog"
+    >
+      <div class="licenseDialog">
+        <div class="licenseHeader">
+          <div class="licenseHeaderText">
+            <h2 id="licenseTitle">The Unlicense</h2>
+            <p>Public-domain dedication and warranty disclaimer</p>
+          </div>
+          <button
+            aria-label="Close"
+            class="licenseClose"
+            id="licenseClose"
+            type="button"
+          >
+            ×
+          </button>
+        </div>
+        <div class="licenseBody">
+          <pre class="licenseText">
+This is free and unencumbered software released into the public domain.
+
+Anyone is free to copy, modify, publish, use, compile, sell, or
+distribute this software, either in source code form or as a compiled
+binary, for any purpose, commercial or non-commercial, and by any
+means.
+
+In jurisdictions that recognize copyright laws, the author or authors
+of this software dedicate any and all copyright interest in the
+software to the public domain. We make this dedication for the benefit
+of the public at large and to the detriment of our heirs and
+successors. We intend this dedication to be an overt act of
+relinquishment in perpetuity of all present and future rights to this
+software under copyright law.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+For more information, please refer to &lt;https://unlicense.org/&gt;
+</pre>
+        </div>
+        <div class="licenseFooter">
+          <button class="primary" id="licenseDone" type="button">
+            <span data-i18n="dialog.close">Schließen</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <script defer="" src="js/i18n.js?v=2.17.0"></script>
+    <script defer="" src="js/config.js?v=2.17.0"></script>
+    <script defer="" src="js/state.js?v=2.17.0"></script>
+    <script defer="" src="js/code-generator.js?v=2.17.0"></script>
+    <script defer="" src="js/controls.js?v=2.17.0"></script>
+    <script defer="" src="js/network.js?v=2.17.0"></script>
+    <script defer="" src="js/dialogs.js?v=2.17.0"></script>
+    <dialog id="editorDialog" aria-labelledby="editorDialogTitle">
+      <form id="editorForm" novalidate>
+        <h2 id="editorDialogTitle"></h2>
+        <div class="stack" id="editorDialogFields"></div>
+        <p id="editorDialogError" class="fieldError" role="alert"></p>
+        <div class="dialogActions"><button type="button" id="editorCancel" data-i18n="action.cancel">Abbrechen</button><button type="submit" class="primary" data-i18n="action.apply" id="editorSubmit">Übernehmen</button></div>
+      </form>
+    </dialog>
+    <script defer="" src="js/editor-actions.js?v=2.17.0"></script>
+    <script defer="" src="js/zip.js?v=2.17.0"></script>
+    <script defer="" src="js/project-files.js?v=2.17.0"></script>
+    <script defer="" src="js/wizard.js?v=2.17.0"></script>
+  </body>
+</html>
